@@ -1,0 +1,25 @@
+-- Criar projeto
+ng new <project-name>
+
+-- inicia o progeto
+ng serve
+
+-- cria um componente
+ng g c <NomeDoComponente>
+
+-- adiciona uma dependecia ao angular
+ng add @angular/material
+
+
+-- String interpolation - transforma um dado em string
+{{ <var> }} 
+
+-- property-binding - exibe o conteudo de uma variavel na tela
+[color]="variavel"
+
+-- envia dados para a classe
+(input) = "inputName = $event.target.value"
+(click) = "executarAlgo($event)"
+
+Two Way DataBinding - a alteracao é feita em tela e refletida automaticamente na classe
+<input [(ngModel)]="name1" name="qualquer1">
