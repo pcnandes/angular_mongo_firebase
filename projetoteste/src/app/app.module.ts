@@ -4,12 +4,16 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MySecondComponent } from './my-second/my-second.component';
+import { MyThirdComponent } from './my-second/my-third/my-third.component';
 
 @NgModule({
   // indica as classes que serão usadas pelo modulo
   declarations: [
     AppComponent,
-    MyFirstComponent
+    MyFirstComponent,
+    MySecondComponent,
+    MyThirdComponent
   ],
   imports: [
     BrowserModule,
