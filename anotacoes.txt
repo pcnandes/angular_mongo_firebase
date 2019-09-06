@@ -63,3 +63,22 @@ ngContainer -> parecido com ngTemplate serve para incluir conteudos dentro dele
 </ul>
 
 <ng-content></ng-content> -> inclui conteudo dentro do componente filho
+
+--- Passando parametros para componente filho
+import { Input } from '@angular/core';
+@Input() title: string;
+
+
+<comp title="blablabla">
+
+--- retornando uma ação para o componente pai
+import { Output, EventEmitter } from '@angular/core';
+@Output() plusOne = new EventEmitter<any>();
+plusOneClick() {
+  this.plusOne.emit();
+}
+
+<comp (plusOne)="metodoDoPai()">
+
+
+
