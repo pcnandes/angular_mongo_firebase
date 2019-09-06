@@ -10,6 +10,9 @@ ng g c <NomeDoComponente>
 -- adiciona uma dependecia ao angular
 ng add @angular/material
 
+constructor -> chamado quando o componente é criado
+ngOnInit -> chamado logo apos o componente ser criado e carregado
+ngOnDestroy -> chamado quando um componente é destruído
 
 -- String interpolation - transforma um dado em string
 {{ <var> }} 
@@ -23,3 +26,12 @@ ng add @angular/material
 
 Two Way DataBinding - a alteracao é feita em tela e refletida automaticamente na classe
 <input [(ngModel)]="name1" name="qualquer1">
+
+ngStyle
+<p [ngStyle]="{ fontSize: myFontSize, color: myColor }">TEST</p>
+
+ngClass
+<p [ngClass]="myClass">TEST</p>
+
+ngIf -> aqui o componente não existe na tela qando false
+<mat-form-field *ngIf="showName">
