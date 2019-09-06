@@ -1,12 +1,12 @@
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatCardModule } from '@angular/material/card';
-import { MatSelectModule } from '@angular/material/select';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatIconModule } from '@angular/material/icon';
-import {MatDividerModule} from '@angular/material/divider';
-
+import { MatButtonModule,
+  MatInputModule,
+  MatCheckboxModule,
+  MatCardModule,
+  MatSelectModule,
+  MatRadioModule,
+  MatIconModule,
+  MatDividerModule,
+  MatProgressBarModule } from '@angular/material';
 
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -21,6 +21,10 @@ import { SubNgIfComponent } from './ng-if/sub-ng-if/sub-ng-if.component';
 import { NgForComponent } from './ng-for/ng-for.component';
 import { MatListModule } from '@angular/material/list';
 import { NgForFormComponent } from './ng-for-form/ng-for-form.component';
+import { NgSwitchComponent } from './ng-switch/ng-switch.component';
+import { NgTemplateComponent } from './ng-template/ng-template.component';
+import { NgContainerComponent } from './ng-container/ng-container.component';
+import { NgContentComponent } from './ng-content/ng-content.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +34,11 @@ import { NgForFormComponent } from './ng-for-form/ng-for-form.component';
     NgIfComponent,
     SubNgIfComponent,
     NgForComponent,
-    NgForFormComponent
+    NgForFormComponent,
+    NgSwitchComponent,
+    NgTemplateComponent,
+    NgContainerComponent,
+    NgContentComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +52,8 @@ import { NgForFormComponent } from './ng-for-form/ng-for-form.component';
     MatListModule,
     MatIconModule,
     MatDividerModule,
-    MatButtonModule
+    MatButtonModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

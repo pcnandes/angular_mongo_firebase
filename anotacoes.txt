@@ -35,3 +35,31 @@ ngClass
 
 ngIf -> aqui o componente não existe na tela qando false
 <mat-form-field *ngIf="showName">
+
+ngFor -> percorre os elementos de um array
+<p *ngFor="let name of names; let i=index"> {{i}} - {{name}}</p>
+
+ngSwitch -> switch case normal
+ <section [ngSwitch]="fieldname">
+	<button *ngSwitchCase="'button'" mat-raised-button color=warn>Button</button>
+	<mat-checkbox *ngSwitchCase="'checkbox'">Checkbox</mat-checkbox>
+	<mat-progress-bar *ngSwitchCase="'progressbar'" color="warn" mode="indeterminate"></mat-progress-bar>
+</section>
+
+ngTemplate (uso com else) -> serve para incluir um conteúdo html
+
+<h1 *ngIf="enable else mytemplate">Enabled</h1>
+<!--#variável de referencia-->
+<ng-template #mytemplate>
+ ...
+ 
+ngContainer -> parecido com ngTemplate serve para incluir conteudos dentro dele
+<ul>
+  <ng-container *ngFor="let user of users">
+	<li *ngIf="user.role==='admin'">
+	  {{user.login}}
+	</li>
+  </ng-container>
+</ul>
+
+<ng-content></ng-content> -> inclui conteudo dentro do componente filho
