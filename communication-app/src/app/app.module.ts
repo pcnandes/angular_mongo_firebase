@@ -8,7 +8,9 @@ import { MatButtonModule,
   MatRadioModule,
   MatIconModule,
   MatDividerModule,
-  MatProgressBarModule } from '@angular/material';
+  MatProgressBarModule,
+  MatFormFieldModule} from '@angular/material';
+  import { FormsModule }   from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,6 +18,7 @@ import { InputBindingComponent } from './input-binding/input-binding.component';
 import { ClientComponent } from './input-binding/client/client.component';
 import { EventComponent } from './event/event.component';
 import { ChildItemComponent } from './event/child-item/child-item.component';
+import { ClientsComponent } from './clients/clients.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { ChildItemComponent } from './event/child-item/child-item.component';
     InputBindingComponent,
     ClientComponent,
     EventComponent,
-    ChildItemComponent
+    ChildItemComponent,
+    ClientsComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +40,9 @@ import { ChildItemComponent } from './event/child-item/child-item.component';
     MatRadioModule,
     MatIconModule,
     MatDividerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatFormFieldModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
