@@ -13,6 +13,7 @@ ng add @angular/material
 constructor -> chamado quando o componente é criado
 ngOnInit -> chamado logo apos o componente ser criado e carregado
 ngOnDestroy -> chamado quando um componente é destruído
+ngAfterViewInit -> chamado após todas as referencias de variaveis estarem prontas
 
 -- String interpolation - transforma um dado em string
 {{ <var> }} 
@@ -80,5 +81,21 @@ plusOneClick() {
 
 <comp (plusOne)="metodoDoPai()">
 
+---- Binding de componentes de tela 
 
+// pega o componente pelo nome #stopwatch
+@ViewChild("stopwatch", {static: true})
+private myTimer: TimerComponent;
 
+// pega o primeiro componente de tela do tipo encontrado
+@ViewChild(TimerComponent, {static: false})
+private myTimer: TimerComponent;
+
+// pegando um component <p>
+@ViewChild('myP', {static: false})
+private myP: ElementRef;
+
+// chamado apos todas as referencias de variaveis estarem prontas
+ngAfterViewInit() {
+  console.log(this.myP);
+}
