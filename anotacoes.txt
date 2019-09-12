@@ -99,3 +99,45 @@ private myP: ElementRef;
 ngAfterViewInit() {
   console.log(this.myP);
 }
+
+
+---- detectando mudanças
+// indico a interface OnChanges para implementa-la
+export class NameChangeComponent implements OnInit, OnChanges {
+
+// implemento o metodo. Aqui é possível capturar as mudanças nas propriedades
+ngOnChanges(changes: {[propKey: string]: SimpleChange}): void {
+    console.log(changes);
+    // verifico se existe a propriedade name q é o atributo que quero capturar a mudança
+    if (changes.hasOwnProperty('name')) {
+      this.nameBefore = changes['name'].previousValue;
+    }
+  }
+
+-- capturando mudanças no @Input
+  // seto um metodo no @Input(), no lugar de uma variavel
+  @Input()
+  // quando uso o set o name vira uma propriedade, essa é uma funçãodo TS
+  set name(name: string) {
+    this._name = 'Your name: ' + (name.toUpperCase().trim() || '<name empty>');
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+
+
+
+90 -> 
+
+
+49,99 7,5g - face instagram e twiter, zap sem limite
+
+com portabilidade ganha 
+
+39,99 - 6G - zap sem limite  550minutos
+
+
+
+
