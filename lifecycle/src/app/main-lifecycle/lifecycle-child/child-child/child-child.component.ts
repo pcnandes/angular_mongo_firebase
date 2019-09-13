@@ -19,6 +19,7 @@ export class ChildChildComponent implements OnInit {
     console.log('   Child Child (ngOnChanges) - ', this.name);
   }
 
+  // chamado logo apos o ngOnInit
   ngAfterContentInit() {
     console.log('   Child Child (ngAfterContentInit) - ', this.name);
   }
