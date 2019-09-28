@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Service1 } from '../service1.service';
+import { Service2 } from 'src/app/service2.service';
 
 @Component({
   selector: 'app-component4',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Component4Component implements OnInit {
 
-  constructor() { }
+  num = 0;
+  text = '';
+
+  // automaticamente o myService1 vira atributo da classe
+  constructor(
+    private myService1: Service1,
+    private myService2: Service2,
+  ) { }
 
   ngOnInit() {
+    this.num = this.myService1.num;
+    this.text = this.myService2.text;
   }
 
 }
