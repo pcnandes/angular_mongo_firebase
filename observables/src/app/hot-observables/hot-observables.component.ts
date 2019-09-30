@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Observer, Subject, ConnectableObservable } from 'rxjs';
-import { publish, refCount } from 'rxjs/operators'
+import { publish, refCount, share } from 'rxjs/operators'
 
 @Component({
   selector: 'app-hot-observables',
@@ -32,9 +32,10 @@ export class HotObservablesComponent implements OnInit {
       }
     );
 
-    // chamo o metodo que irá se inscrever no meu Observable
+    // formas de esquentar um observable, ou seja, fazer com que todos os observadores recebam o mesmo dado
     // this.usingSubjects();
-    this.usingPublish()
+    //this.usingPublish()
+    this.usingShare();
   }
   // subject é um Observable e um observer ao mesmo tempo
   usingSubjects() {
@@ -82,6 +83,31 @@ export class HotObservablesComponent implements OnInit {
     // dessa forma eu posso forçar o momento da conexao 
     multcasted.connect();
 
+    this.s1 = 'waiting for interval...';
+    // subscriber 1 - apos 2 segundo me inscrevo no publish
+    setTimeout(() => {
+      multcasted.subscribe((_n) => {
+        this.n1 = _n;
+        this.s1 = 'ok';
+      });
+    }, 2000)
+
+    this.s2 = 'waiting for interval...';
+
+    // subscriber 2 - após 4 segundos me inscrevo no publish 2
+    setTimeout(() => {
+      multcasted.subscribe((_n) => {
+        this.n2 = _n;
+        this.s2 = 'ok';
+      });
+    }, 4000)
+  }
+
+
+  // o share funciona parecido com o subject, so vai iniciar após o primeiro subject
+  // a diferença do share é que após um completed, se ocorrer outro subscribe ele começa a gerar os dados novamente
+  usingShare() {
+    const multcasted =  this.myObservable.pipe(share());
     this.s1 = 'waiting for interval...';
     // subscriber 1 - apos 2 segundo me inscrevo no publish
     setTimeout(() => {
