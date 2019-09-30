@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, ReplaySubject, AsyncSubject, BehaviorSubject } from 'rxjs';
+import { GenRandomDataService } from '../gen-random-data.service';
+import { DataModel } from '../datamodel';
 
 @Component({
   selector: 'app-subjects',
@@ -8,21 +10,29 @@ import { Subject } from 'rxjs';
 })
 export class SubjectsComponent implements OnInit {
 
-  constructor() { }
+  // exemplo dos 4 tipos de subjects disponiveis
+  private subject: Subject<DataModel>;
+  private replaySubject: ReplaySubject<DataModel>;
+  private asyncSubject: AsyncSubject<DataModel>;
+  private behaviorSubject: BehaviorSubject<DataModel>;
+
+  constructor(private dataService: GenRandomDataService) { }
 
   ngOnInit() {
-    let s: Subject<number> = new Subject<number>();
-    // o subscribe se conecta ao Subject e fica ouvindo. Aqui estou pegando o retorno e imprimindo
-    s.subscribe(n => console.log(n));
+    this.subject = new Subject<DataModel>();
+    this.replaySubject = new ReplaySubject<DataModel>();
+    this.asyncSubject = new AsyncSubject<DataModel>();
+    this.behaviorSubject = new BehaviorSubject<DataModel>({ timestamp: 0, data: 0 });
 
-    // gerando dados no meu ubscribe
-    s.next(1);
-    s.next(2);
-    s.next(3);
-    s.next(4);
-    s.next(5);
-    s.next(6);
-    s.complete();
+
+    // me inscrevo no observable para cada um dos subjects
+    this.dataService.dataObservable.subscribe(this.subject);
+    this.dataService.dataObservable.subscribe(this.replaySubject);
+    this.dataService.dataObservable.subscribe(this.asyncSubject);
+    this.dataService.dataObservable.subscribe(this.behaviorSubject);
   }
 
+  connect() {
+    this.dataService.dataObservable.connect();
+  }
 }

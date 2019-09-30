@@ -1,1 +1,10 @@
-<p>subjects works!</p>
+<h3>Subjects</h3>
+<button (click)="connect()">Connect</button>
+<br/>
+<hr/>
+<div style="display: flex;">
+    <app-subjects-child name="Subject" [subject] = "subject" description="começa a pegar os eventos a partir do subscribe"></app-subjects-child>
+    <app-subjects-child name="ReplaySubject" [subject] = "replaySubject" description="pega todos os eventos gerados pelo observable"></app-subjects-child>
+    <app-subjects-child name="AsyncSubject" [subject] = "asyncSubject" description="pega apenas o ultimo evento"></app-subjects-child>
+    <app-subjects-child name="behaviorSubject" [subject] = "behaviorSubject" description="igual ao Subject, mas o primeiro evento é o dado passado no construtor, além disso, ele pega o ultimo evento gerado pelo observabe"></app-subjects-child>
+</div>
