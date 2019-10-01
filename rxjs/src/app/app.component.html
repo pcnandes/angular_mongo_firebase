@@ -1,0 +1,13 @@
+<div fxLayout="row" fxLayoutAlign="space-around center" fxFill>
+  <div fxFlex="20">
+    <mat-radio-group [(ngModel)]="option" fxLayout="column" fxLayoutAlign="center start">
+      <mat-radio-button value="basic-creation">basic-creation</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div fxFlex="70" fxLayout="column" fxLayoutAlign="center start">
+    <ng-container [ngSwitch]="option">
+      <!-- preciso passar entre aspas simples para entender q eé uma string -->
+      <app-basic-creation *ngSwitchCase="'basic-creation'" fxFill></app-basic-creation>
+    </ng-container>
+  </div>
+</div>
