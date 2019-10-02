@@ -1,3 +1,20 @@
+****** MACETES *****
+'as user' -> cria uma variavel chamada user
+'else loadinguser2' -> cria uma variavel chamada loadinguser2
+<div *ngIf="user$ | async as user; else loadinguser2">
+
+se a varivel loadinguser2 existir, ele carrega o ng-template
+<ng-template #loadinguser2>
+  <mat-progress-bar></mat-progress-bar>
+</ng-template>
+
+'?' -> verifica se e nulo
+<p>Name: {{user?.name}}</p>
+
+********************
+
+
+
 -- Criar projeto
 ng new <project-name>
 
@@ -222,7 +239,15 @@ this.s1 = 'waiting for interval...';
   });
 
 -- SUBJECTS
-
+4 tipos de subjects disponiveis
+// começa a pegar os eventos a partir do subscribe"
+private subject: Subject<DataModel>;
+//pega todos os eventos gerados pelo observable
+private replaySubject: ReplaySubject<DataModel>;
+// pega apenas o ultimo evento
+private asyncSubject: AsyncSubject<DataModel>;
+// igual ao Subject, mas o primeiro evento é o dado passado no construtor, além disso, ele pega o ultimo evento gerado pelo observabe"></app-subjects-child>
+private behaviorSubject: BehaviorSubject<DataModel>;
 
 ---FUNCOES RXJS
 
@@ -269,7 +294,7 @@ export class BasicCreationComponent implements OnInit {
       .subscribe(val => console.log(val));
   }
 
-// define um intervalo que ser chamado
+// define um intervalo que ser chamado, interval gera numeros de 0 ate n
   intervalClick() {
     const source = interval(1000);
     this.subscription.add(source.subscribe((v) => console.log(v)));
@@ -309,5 +334,126 @@ export class BasicCreationComponent implements OnInit {
 
 
 
+--- OPERADORES EXJS
 
+---Map -> permite modificar o resultado
+from([1,2,3,4,5,6,7])
+    // no pipe posso encadear uma série de operadores e transformar os dados
+    .pipe(
+      map(i => i*2),
+      map(i => 'Number:' + 1),
+      // da um atraso no retorno da informacao
+      delay(1000)
+    )
+      .subscribe((i) => console.log(i));
 
+--Filter -> serve para filtrar os resultados
+filterClick() {
+    from([1,2,3,4,5,6,7])
+    .pipe(
+      // permite filtrar
+      filter(i => i % 2 === 1)
+    )
+    .subscribe((i) => console.log(i));
+
+    interval(1000)
+      .pipe(
+        filter(i => i % 2 === 0),
+        map(i => 'Number:' + i),
+      )
+      .subscribe((i) => console.log(i))
+  }
+  
+  --Tap -> a ideia do tap é executar alguma coisa e não modificar o valor. Por exemplo podemos dar um log no valor durante a geraçao
+  interval(1000)
+      .pipe(
+        
+        tap(i => console.warn('Before filter' + i)),
+        filter(i => i % 2 === 0),
+        // se for filtrado, o after nao é impresso
+        tap(i => console.warn('After filter' + i)),
+        map(i => 'Number:' + i),
+      )
+      .subscribe((i) => console.log(i))
+  
+-- Operadores Take, First e Last
+ Take (deixa passar n elementos e depois executa o complete e unsubscribe) 
+ First (deixa passar o primeiro elementos e depois executa o complete e unsubscribe) 
+ Last (deixa passar o ultimo elemento, mas nao encerra o observable) 
+
+const observable = new Observable((observer) => {
+      let i; 
+      for(i=0; i<20; i++) {
+        setTimeout(() => {
+          observer.next(Math.floor(Math.random()*100))
+        }, i*100);
+      }
+      setTimeout(() => observer.complete(), i*100);
+    })
+    const s: Subscription = observable
+      .pipe(
+        tap(i => console.log(i)),
+        // encessa o sunscription depois de N passadas, ele executa um complete. Não é necessário tbm dar unsubscribe
+        take(10),
+        // igual ao take, porem pega o primeiro
+        // first()
+        // igual aos anteriores, porem pega o ultimo. Mas o last nao encerra o Observable.
+        // last()
+      )
+      .subscribe(
+        v => console.log('Output ' + v),
+        (error) => console.error(error),
+        () => console.log('Complete'));
+  }
+  
+  
+ ---- debounceTime -> Exige que exista um tempo de ociocidade em eventos para disparar a pilha de eventos
+ 
+ debounceTimeClick() {
+    fromEvent(document, 'click')
+      .pipe(
+        tap((e) => console.log('Click')),
+        // durante esse intervalo, eu posso gerar n eventos, mas apenas o ultimo será repassado. Nesse exemplo teremos no maximo 1 click por segundo;
+        // uma boa utilizacao é para pesquisa no evento de keypress
+        debounceTime(1000)
+      )
+      .subscribe(
+        (e: MouseEvent) => {
+          console.log("Click with debounce time ", e);
+          this.louchRipple();
+        }
+      )
+  }
+  
+---Async -> usado na interface para se trabalhar com observables. O async faz um subscribe no observable e captura o resultado
+
+ngOnInit() {
+this.options$ = Observable.create(
+  (observer) => {
+	for(let i=0; i<10; i++) {
+	  observer.next(`This is my ${i}th option.`);
+	}
+	observer.complete();
+  }
+)
+.pipe(
+  map(s => s+'!'),
+  toArray(),
+  delay(2000)
+);
+
+<mat-selection-list>
+	<!-- O proprio async da subscribe do observable-->
+	<!-- async é muito usado para trabalhar com observables, pois ele transforma o observable no dado por ele gerado, nesse caso um array -->
+	<mat-list-option *ngFor="let o of options$ | async">{{o}}</mat-list-option>
+</mat-selection-list>
+
+<!-- esse as, cria uma variavel local chamada user, com isso, ele faz um unico subscribe no observable-->
+<div *ngIf="user$ | async as user; else loadinguser2">
+  <!--? verifica se é nulo-->
+  <p>Name: {{user?.name}}</p>
+  <p>Login: {{user?.login}}</p>
+</div>
+<ng-template #loadinguser2>
+  <mat-progress-bar></mat-progress-bar>
+</ng-template>
