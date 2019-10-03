@@ -4,6 +4,9 @@
       <mat-radio-button value="basic-creation">Basic creation</mat-radio-button>
       <mat-radio-button value="operators">Operators</mat-radio-button>
       <mat-radio-button value="async">Templates async</mat-radio-button>
+      <mat-radio-button value="error-handing">Error Handing</mat-radio-button>
+      <mat-radio-button value="draganddrop">Drag And Drop</mat-radio-button>
+      <mat-radio-button value="unsubscribe">Unsubscribe</mat-radio-button>
     </mat-radio-group>
   </div>
   <div fxFlex="70" fxLayout="column" fxLayoutAlign="center start">
@@ -12,6 +15,9 @@
       <app-basic-creation *ngSwitchCase="'basic-creation'" fxFill></app-basic-creation>
       <app-operators *ngSwitchCase="'operators'" fxFill></app-operators>
       <app-async *ngSwitchCase="'async'" fxFill></app-async>
+      <app-error-handing *ngSwitchCase="'error-handing'" fxFill></app-error-handing>
+      <app-drag-and-drop *ngSwitchCase="'draganddrop'" fxFill></app-drag-and-drop>
+      <app-unsubscribe *ngSwitchCase="'unsubscribe'" fxFill></app-unsubscribe>
     </ng-container>
   </div>
 </div>

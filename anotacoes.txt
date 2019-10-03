@@ -457,3 +457,58 @@ this.options$ = Observable.create(
 <ng-template #loadinguser2>
   <mat-progress-bar></mat-progress-bar>
 </ng-template>
+
+
+--- Tratamento de erro dentro de um observable, permitindo capturar o erro no momento da geraçao dos dados.
+--- O retry e retryWhen permitem reexecutar a operaçao em caso de erro
+--- timeout -> espera uma quantidade de tempo para que ocorra o complete, se nao ocorrer retorna um TimeoutError
+obj
+  .pipe(
+	map(i=>i*10),
+	tap(i=>console.log('Before error handing' + i)),
+	// tempo de espera para completar o observable, se nao completar nesse tempo ele retorna um TimeoutError
+	timeout(1000)
+	// captura um erro durante a geração dos dados
+	catchError(error => {
+	  console.error('Inside catch Error' + error)
+	  // of cria um observable para ser retornado
+	  // posso simplesmente retornar um valor em caso de erro
+	  // return of(0);
+	  // ou posso disparar uma excessão
+	  return throwError('throwError: Error')
+	}),
+	// tenta n vezes em caso de erro
+	// retry(2),
+	// recebe um observable dizendo quando ele deve tentar, no exemlo abaixo, tenta depois de 2 segundos
+	retryWhen(i => timer(2000))
+  )
+
+--- Unsubscribe mais elegante
+private unsubscribeAll$: Subject<any> = new Subject<any>();
+subscribe() {
+	// vai gerar 100 subscribes
+	const subscription1 = interval(100)
+	  .pipe(takeUntil(this.unsubscribeAll$))
+	  .subscribe((i)=>{
+		console.log(i);
+	  })
+
+	// vai gerar um subscribe a cada movimento do mouse
+	const subscription2 = fromEvent(document, 'mousemove')
+	  .pipe(takeUntil(this.unsubscribeAll$))
+	  .subscribe((e) => console.log(e));
+
+	this.subscriptions.push(subscription1);
+	this.subscriptions.push(subscription2);
+}
+unsubscribe() {
+	this.unsubscribeAll$.next()
+	if (this.intervalSubscription != null)
+		this.intervalSubscription.unsubscribe();
+}
+
+ngOnDestroy() {
+	// o ideal é sempre se desinscrever de todos os observables
+	this.unsubscribe();
+}
+

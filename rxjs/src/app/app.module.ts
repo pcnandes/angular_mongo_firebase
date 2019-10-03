@@ -8,13 +8,19 @@ import { MaterialModule } from './material.module';
 import { FormsModule } from '@angular/forms';
 import { OperatorsComponent } from './operators/operators.component';
 import { AsyncComponent } from './async/async.component';
+import { ErrorHandingComponent } from './error-handing/error-handing.component';
+import { DragAndDropComponent } from './drag-and-drop/drag-and-drop.component';
+import { UnsubscribeComponent } from './unsubscribe/unsubscribe.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BasicCreationComponent,
     OperatorsComponent,
-    AsyncComponent
+    AsyncComponent,
+    ErrorHandingComponent,
+    DragAndDropComponent,
+    UnsubscribeComponent
   ],
   imports: [
     BrowserModule,
