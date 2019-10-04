@@ -11,6 +11,9 @@ se a varivel loadinguser2 existir, ele carrega o ng-template
 '?' -> verifica se e nulo
 <p>Name: {{user?.name}}</p>
 
+--formata moeda
+{{p.price | currency: 'R$'}}
+
 ********************
 
 
@@ -529,5 +532,4 @@ this.people$ = keyup$
 	// nao vai mandar nada até q a digitação fique ociosa em 700ms
 	debounceTime(700),
 	switchMap(() => this.filterPeople(this.serachInput)));
-	
 	

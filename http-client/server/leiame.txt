@@ -1,0 +1,8 @@
+--gerar dados
+node generate
+
+
+-- verificar no banco
+mongo
+use http_client
+db.products.find({})

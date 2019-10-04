@@ -13,9 +13,9 @@ async function createRandomPeople() {
     let p = new Person({
       firstname: faker.name.firstName(),
       lastname: faker.name.lastName(),
-      email: faker.internet.email,
-      city: faker.address.city,
-      country: faker.address.country
+      email: faker.internet.email(),
+      city: faker.address.city(),
+      country: faker.address.country()
     });
     try {
       await p.save()
