@@ -24,7 +24,13 @@ export class AppComponent {
   }
 
   getProductsWithErrorHandling() {
-    this.simpleReqProductsObs$ = this.productsService.getProdutosErr();
+    this.productsService.getProdutosErr()
+      .subscribe(
+        (prods) => this.productsErrorHandling = prods,
+        // tratamento de erro
+        (err) => {
+
+        }
   }
 
   getProductsWithErrorHandlingOK(){
