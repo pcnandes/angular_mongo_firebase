@@ -512,3 +512,22 @@ ngOnDestroy() {
 	this.unsubscribe();
 }
 
+
+--- mergeAll, mergeMap, swithAll, swithMap 
+mergeAll -> se inscreve automaticamente no observable e recupera apenas o resultado
+let keyup$ = fromEvent(this.el.nativeElement, 'keyup');
+let fetch$ = keyup$.pipe(map((e) => this.filterPeople(this.serachInput)));
+this.people$ = fetch$.pipe(mergeAll());
+
+mergeMap -> faz o mesmo que o map e o mergeAll juntos
+this.people$ = keyup$.pipe(mergeMap((e) => this.filterPeople(this.serachInput)));
+
+switchAll -> identico ao mergeAll, mas o switch cancela as requisicoes anteriores ainda nao retornadas, com isso existe um ganho de performance
+switchMap -> identico ao switchMap, mas o switch cancela as requisicoes anteriores ainda nao retornadas, com isso existe um ganho de performance
+this.people$ = keyup$
+  .pipe(
+	// nao vai mandar nada até q a digitação fique ociosa em 700ms
+	debounceTime(700),
+	switchMap(() => this.filterPeople(this.serachInput)));
+	
+	

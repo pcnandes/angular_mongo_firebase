@@ -11,6 +11,8 @@ import { AsyncComponent } from './async/async.component';
 import { ErrorHandingComponent } from './error-handing/error-handing.component';
 import { DragAndDropComponent } from './drag-and-drop/drag-and-drop.component';
 import { UnsubscribeComponent } from './unsubscribe/unsubscribe.component';
+import { SwitchMergeComponent } from './switch-merge/switch-merge.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,13 +22,16 @@ import { UnsubscribeComponent } from './unsubscribe/unsubscribe.component';
     AsyncComponent,
     ErrorHandingComponent,
     DragAndDropComponent,
-    UnsubscribeComponent
+    UnsubscribeComponent,
+    SwitchMergeComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
+    // usado para trabalhar com Http
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
