@@ -544,3 +544,21 @@ this.people$ = keyup$
 	debounceTime(700),
 	switchMap(() => this.filterPeople(this.serachInput)));
 	
+	
+#FORMS
+- Template Driven Forms
+<!--
+  Formulário controlado pelo Angular (#formClient="ngForm")
+  para que funcione é preciso ter o name a cada um dos campos
+  (ngSubmit)="onSubmit()" -> faz o link com o metódo que fará o submit do form
+-->
+<form fxLayout="column" fxLayoutAlign="start stretch"
+  #formClient="ngForm" (ngSubmit)="onSubmit()">
+
+<input matInput type="text" class="form-control" value="" placeholder="First Name" 
+	[(ngModel)]="client.firstName" name="firstName">
+
+<button mat-button color="primary" type="submit" >
+	<mat-icon>done</mat-icon>Submit
+</button>
+
