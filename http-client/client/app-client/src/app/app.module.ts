@@ -6,10 +6,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DialogEditProductComponent } from './dialog-edit-product/dialog-edit-product.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DialogEditProductComponent
   ],
   imports: [
     BrowserModule,
@@ -19,6 +21,10 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  // como angular inicia o dialog no load do projeto é preciso definilo aqui
+  entryComponents: [
+    DialogEditProductComponent
+  ],
 })
 export class AppModule { }

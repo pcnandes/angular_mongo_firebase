@@ -19,4 +19,29 @@ export class ProductsService {
   getProdutosErr(): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.url}/productserr`);
   }
+
+  getProdutosDelay(): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.url}/productsdelay`);
+  }
+
+  getProdutosIds(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.url}/products_ids`);
+  }
+
+  getProdutosName(id: string): Observable<string> {
+    return this.http.get(`${this.url}/products/name/${id}`, 
+      {responseType: 'text'});
+  }
+
+  saveProduct(p: Product): Observable<Product> {
+    return this.http.post<Product>(`${this.url}/products`, p);
+  }
+
+  deleteProducts(p: Product) {
+    return this.http.delete(`${this.url}/products/${p._id}`)
+  }
+
+  editProducts(p: Product): Observable<Product> {
+    return this.http.patch<Product>(`${this.url}/products/${p._id}`, p);
+  }
 }

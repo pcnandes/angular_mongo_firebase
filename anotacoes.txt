@@ -14,6 +14,17 @@ se a varivel loadinguser2 existir, ele carrega o ng-template
 --formata moeda
 {{p.price | currency: 'R$'}}
 
+
+// quanto for retornar algo diferente de json e preciso informar
+return this.http.get(`${this.url}/products/name/${id}`, 
+      {responseType: 'text'});
+	  
+	  
+// cria uma copia de um objeto
+let newProduct: Product = {...p}
+// dessa forma ele faz a copia e altera um dado
+let newProduct: Product = {...p, _id: 10}
+
 ********************
 
 
