@@ -546,6 +546,9 @@ this.people$ = keyup$
 	
 	
 #FORMS
+-- Importar o FormsModule, em app.module para usar forms
+
+
 - Template Driven Forms
 <!--
   Formulário controlado pelo Angular (#formClient="ngForm")
@@ -562,3 +565,112 @@ this.people$ = keyup$
 	<mat-icon>done</mat-icon>Submit
 </button>
 
+
+# VALIDACAO
+----form-native-validation
+<form (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="start stretch"  #formClient="ngForm">
+	<mat-form-field fxFlex="45" >
+	  <!--
+		#firstNameField="ngModel" -> pego o ngModel
+		invalid -> indica q o campo está inválido
+		touched -> indica q o campo foi clicado e saiu
+		dirty -> alguma tecla foi digitada
+	  -->
+	  <input matInput type="text" autocomplete="off" [(ngModel)]="firstName" name="firstName"
+		class="form-control" value="" placeholder="First Name" #firstNameField="ngModel"
+		required minlength="3">
+		<mat-hint *ngIf="firstNameField.invalid && (firstNameField.touched || firstNameField.dirty)" class="field-erro">
+		<p>Enter a valid name</p>
+	  </mat-hint>
+	</mat-form-field>
+  	<!--  !formClient.valid -> desabilito o botão se o form nao for valido-->
+  <button mat-button color="primary" type="submit" 
+	[disabled]="!formClient.valid">
+	<mat-icon>done</mat-icon>Submit
+  </button>
+</form>
+
+-- form-validation
+<form (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="start stretch" #formClient="ngForm">
+	<mat-form-field fxFlex="45" >  
+	  <input matInput type="text" class="form-control" value="" placeholder="First Name"
+		name="firstName"  [(ngModel)]="client.firstName"
+		required minlength="4" #firstName="ngModel">
+	  <!-- verifica se tem erro de required ou minlength-->
+	  <mat-error *ngIf="firstName.errors?.required">
+		Please enter the first name
+	  </mat-error>
+	  <mat-error *ngIf="firstName.errors?.minlength">
+		First name must be 4 or more characters long
+	  </mat-error>
+	</mat-form-field>
+    <button mat-button color="primary" type="submit" [disabled]="!formClient.valid" >
+		<mat-icon>done</mat-icon>Submit
+    </button>
+</form>
+
+#REACTIVE FORMS
+- é necessário importar o ReactiveFormsModule no app.module
+
+--- form control
+é uma meira de validar e controlar os condeúdos dos campos individualmente
+ex.:
+<input matInput type="text" 
+	class="form-control" value="" placeholder="First Name" 
+	[formControl]="firstName">
+
+// é preciso criar um atributo q será lincado com a tela
+firstName: FormControl = new FormControl('');
+
+ngOnInit() {
+  // o firstName é um observable, sendo assim é possivel capturar algumas informacoes sobre o input
+  this.firstName.valueChanges
+    .subscribe((newName) => console.log(newName));
+}
+
+setFirstName() {
+ // tbm é possivel acessar e modificar seu conteudo
+  this.firstName.setValue('Adam');
+  console.log(this.firstName.value);
+}
+
+
+--- form group
+é uma forma de agrupar forms control e forms group
+ex: 
+// propriedade
+clientForm = new FormGroup({
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    name: new FormGroup({
+      firstName: new FormControl(''),
+      lastName: new FormControl(''),
+    })
+  });
+
+// forma de acessar
+submit() {
+    console.log(this.clientForm.value);
+    console.log(`
+      First Name: ${this.clientForm.value.firstName},
+      Last Name: ${this.clientForm.value.lastName}
+      First Name Interno: ${this.clientForm.value.name.lastName}
+    `);
+
+ <!--[formGroup] -> indico o grupo-->
+  <form fxLayout="row wrap" fxLayoutAlign="space-evenly begin" 
+	[formGroup]="clientForm" (ngSubmit)="submit()">
+	<mat-form-field fxFlex="45" >  
+	  <!-- formControlName="firstName" - indico o atricuto interno do grupo-->
+	  <input matInput type="text" value="" placeholder="First Name"
+		formControlName="firstName">
+	</mat-form-field> 
+	<!-- SUBGRUPO -->
+	<div fxLayout="column" fxLayoutAlign="space-around stretch"
+	  formGroupName="name">
+	  <mat-form-field fxFlex="45" >  
+		<input matInput type="text" value="" placeholder="First Name"
+		  formControlName="firstName">
+	  </mat-form-field> 
+	</div>
+</form>
