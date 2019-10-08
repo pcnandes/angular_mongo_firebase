@@ -10,6 +10,8 @@ import { FormNativeValidationComponent } from './form-native-validation/form-nat
 import { FormValidationComponent } from './form-validation/form-validation.component';
 import { FormControlComponent } from './form-control/form-control.component';
 import { FormGroupComponent } from './form-group/form-group.component';
+import { FormBuilderComponent } from './form-builder/form-builder.component';
+import { FormArrayComponent } from './form-array/form-array.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { FormGroupComponent } from './form-group/form-group.component';
     FormNativeValidationComponent,
     FormValidationComponent,
     FormControlComponent,
-    FormGroupComponent
+    FormGroupComponent,
+    FormBuilderComponent,
+    FormArrayComponent
   ],
   imports: [
     BrowserModule,

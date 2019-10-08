@@ -674,3 +674,110 @@ submit() {
 	  </mat-form-field> 
 	</div>
 </form>
+
+
+---- form builder
+funciona de forma parecida com o formgroup, mas tem alguns facilitadores na hora de gerar as propriedades
+ex.:
+constructor(
+	private fb: FormBuilder
+) { }
+
+// Primeiro campo é o valor e o sengundo a validação 
+  // firstName: ['', validacao],
+  clientForm = this.fb.group({
+    firstName: [''],
+    lastName: [''],
+    address: this.fb.group({
+      street: [''],
+      city: [''],
+      state: [''],
+    })
+  });
+  
+
+-- form array
+Permite criar arrays de controls ou groups
+ex.: 
+constructor(
+	private fb: FormBuilder
+) { }
+clientForm = this.fb.group({
+    firstName: [''],
+    lastName: [''],
+	// se eu ja quiser iniciar com dois telefones this.fb.array([''], [''])
+    phones: this.fb.array(['']),
+  });
+// coloco pra fora os phones ja convertendo em FormArray
+// aqui ele cria uma referencia de memória
+phones = this.clientForm.get('phones') as FormArray;
+
+// adiciono dinamicamente telefones
+addPhone() {
+    this.phones.push(this.fb.control(''));
+  }
+  
+  
+<!-- preciso indicar o formArrayName -->
+<div fxFlex="100"  fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px"
+  formArrayName="phones">
+  <!-- phones.controls -> retorna um array de controls -->
+  <mat-form-field fxFlex="30" *ngFor="let c of phones.controls; let i=index;">  
+	<!-- indico o control pelo indice -->
+	<input matInput type="text" placeholder="Telephone" 
+	  [formControlName]="i">
+  </mat-form-field>
+
+  <button mat-button type="button" color="primary" (click)="addPhone()">
+	<mat-icon>add</mat-icon>
+  </button>
+</div>
+
+-- tbm é possivel fazer um array de grupos
+constructor(
+	private fb: FormBuilder
+) { }
+  
+clientForm = this.fb.group({
+    firstName: [''],
+    lastName: [''],
+	children: this.fb.array([]),
+})
+
+// coloco pra fora os phones ja convertendo em FormArray
+// aqui ele cria uma referencia de memória
+children = this.clientForm.get('children') as FormArray;
+
+addChild() {
+	// aqui diciono um grupo
+	this.children.push(
+	  this.fb.group({
+		name: this.fb.control(''),
+		age: this.fb.control(''),
+	  })
+	);
+}
+
+<!-- formArrayName="children" -> indico o nome do array -->
+<div fxFlex="100"  fxLayout="column" fxLayoutAlign="space-between start"
+  formArrayName="children">
+  <!-- 
+	</ng-container> nao parce, so indica q tera algo
+	percorro o array de grupos 'children.controls'
+  -->
+  <ng-container *ngFor="let c of children.controls; let i=index;">
+	<!-- no formGroupName passo o index do group -->
+	<div fxFlex="100"  fxLayout="row" fxLayoutAlign="space-between begin"
+	  [formGroupName]="i">
+	  <mat-form-field fxFlex="75" >  
+		<input matInput type="text" placeholder="Name" 
+		  formControlName="name">
+	  </mat-form-field> 
+	  <mat-form-field fxFlex="20">
+		<input matInput type="text" placeholder="Age" 
+		  formControlName="age">
+	  </mat-form-field>
+	</div>
+  </ng-container>
+</div>
+
