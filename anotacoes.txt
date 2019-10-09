@@ -781,3 +781,35 @@ addChild() {
   </ng-container>
 </div>
 
+
+---- ReactiveFormValidation
+
+clientForm = this.fb.group({
+    // passamos a validacao
+    firstName: ['', [Validators.required, Validators.minLength(5)]],
+    lastName: ['', [Validators.required]],
+    birth: [new Date(), [Validators.required]],
+    age: [0, [Validators.required, Validators.max(150), Validators.min(0)]],
+    email: ['', [Validators.required, Validators.email]],
+    street: ['', [Validators.required]],
+    city: ['', [Validators.required]],
+    state: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
+    phone1: ['', [Validators.required]],
+    phone2: ['', [Validators.required]],
+  });
+
+-- Ex.
+<mat-form-field fxFlex="45" >  
+  <input matInput type="text" formControlName="firstName" placeholder="First Name" >
+  <!--Uma forma de capturar os erros -->
+  <mat-error *ngIf="clientForm.controls.firstName.errors?.required">
+	Please enter the first name
+  </mat-error>
+  <!--Forma mais segura de capturar os erros -->
+  <mat-error *ngIf="clientForm.controls.firstName.hasError('minlength')">
+	First name must be {{clientForm.controls.firstName.errors.requiredLength}} 
+	or more characters. Actual: {{clientForm.controls.firstName.errors.actualLength}}
+	<!-- Exibe as propriedades de um erro especifico
+	{{clientForm.controls.firstName.errors | json}}-->
+  </mat-error>
+</mat-form-field> 

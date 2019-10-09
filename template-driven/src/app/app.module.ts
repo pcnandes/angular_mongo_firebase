@@ -12,6 +12,7 @@ import { FormControlComponent } from './form-control/form-control.component';
 import { FormGroupComponent } from './form-group/form-group.component';
 import { FormBuilderComponent } from './form-builder/form-builder.component';
 import { FormArrayComponent } from './form-array/form-array.component';
+import { ReactiveFormValidationComponent } from './reactive-form-validation/reactive-form-validation.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FormArrayComponent } from './form-array/form-array.component';
     FormControlComponent,
     FormGroupComponent,
     FormBuilderComponent,
-    FormArrayComponent
+    FormArrayComponent,
+    ReactiveFormValidationComponent
   ],
   imports: [
     BrowserModule,
