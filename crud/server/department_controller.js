@@ -34,7 +34,7 @@ router.delete('/:id', (req, res) => {
       dep.name = req.body.name;
       dep.save()
         .then((d) => res.status(200).send(d))
-        .catch((e) => res.status(500).send(err))
+        .catch((e) => res.status(500).send(err));
     }
   })
 })
