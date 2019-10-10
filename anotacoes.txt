@@ -1,4 +1,7 @@
 ****** MACETES *****
+docker run -d -p 27017:27017 -p 28017:28017 -e AUTH=no tutum/mongodb
+
+
 'as user' -> cria uma variavel chamada user
 'else loadinguser2' -> cria uma variavel chamada loadinguser2
 <div *ngIf="user$ | async as user; else loadinguser2">
@@ -25,10 +28,9 @@ let newProduct: Product = {...p}
 // dessa forma ele faz a copia e altera um dado
 let newProduct: Product = {...p, _id: 10}
 
-********************
 
 
-
+### AngularCli
 -- Criar projeto
 ng new <project-name>
 
@@ -40,6 +42,22 @@ ng g c <NomeDoComponente>
 
 -- adiciona uma dependecia ao angular
 ng add @angular/material
+
+-- adiciona o flex-layout
+npm install --save @angular/flex-layout
+
+--adiciona um component
+-- -m <nome_do_module_principal> (app) -> usado quando existe mais de um modulo
+ng g c <ComponentName> -m <nome_do_module_principal>
+
+-- adiciona um servico. Ele vai gerar NomeService
+ng g s <ServiceName>
+
+-- gerando uma interface
+ng g i <InterfaceName>
+
+********************
+
 
 constructor -> chamado quando o componente é criado
 ngOnInit -> chamado logo apos o componente ser criado e carregado

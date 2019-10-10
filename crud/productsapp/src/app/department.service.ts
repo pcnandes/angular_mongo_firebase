@@ -35,4 +35,34 @@ export class DepartmentService {
         tap((dep: Department) => this.departmentSubject$.getValue().push(dep))
       );
   }
+
+  del(dep: Department): Observable<any> {
+    // pipe so é executado quando for dado um subscribe
+    return this.http.delete(`${this.url}/${dep._id}`)
+      .pipe(
+        // indica que deu certo a chamada
+        // tap é usado para fazer qqr coisa antes de enviar o resultado
+        tap(() => {
+          // remove o department da lista
+          let departments = this.departmentSubject$.getValue();
+          let i = departments.findIndex(d => d._id === dep._id);
+          if (i >= 0) {
+            departments.splice(i, 1);
+          }
+        })
+      );
+  }
+
+  update(dep: Department): Observable<Department> {
+    return this.http.patch<Department>(`${this.url}/${dep._id}`, dep)
+      .pipe(
+        tap((d) => {
+          let departments = this.departmentSubject$.getValue();
+          let i = departments.findIndex(d => d._id === dep._id);
+          if (i >= 0) {
+            departments[i].name = d.name;
+          }
+        })
+      );
+  }
 }

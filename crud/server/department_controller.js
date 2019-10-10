@@ -28,6 +28,15 @@ router.delete('/:id', (req, res) => {
   Department.deleteOne({_id: id}, (err) => {
     if (err)
       res.status(500).send(err);
+    else
+      res.status(200).send({});
+  })
+})
+
+router.patch('/:id', (req, res) => {
+  Department.findById(req.params.id, (err, dep) => {
+    if (err)
+      res.status(500).send(err);
     else if (!dep)
       res.status(404).send({});
     else {
@@ -36,23 +45,6 @@ router.delete('/:id', (req, res) => {
         .then((d) => res.status(200).send(d))
         .catch((e) => res.status(500).send(err));
     }
-  })
-})
-
-
-router.patch('/:id', (req, res) => {
-  Department.findById(req.params.id, (err, dep) => {
-    if (err)
-      res.status(500).send(err);
-    else
-      res.status(200).send({});
-  })
-
-  Department.deleteOne({_id: id}, (err) => {
-    if (err)
-      res.status(500).send(err);
-    else
-      res.status(200).send({});
   })
 })
 
