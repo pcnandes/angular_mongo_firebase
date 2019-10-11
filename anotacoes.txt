@@ -17,6 +17,8 @@ se a varivel loadinguser2 existir, ele carrega o ng-template
 --formata moeda
 {{p.price | currency: 'R$'}}
 
+--- e possivel definir mais que um tipo de atributo
+departments: Department[] | string[];
 
 // quanto for retornar algo diferente de json e preciso informar
 return this.http.get(`${this.url}/products/name/${id}`, 

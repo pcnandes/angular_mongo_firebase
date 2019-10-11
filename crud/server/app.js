@@ -3,6 +3,7 @@ const bodyparser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const department_controller = require('./department_controller');
+const product_controller = require('./department_controller');
 const app = express();
 
 app.use(bodyparser.json());
@@ -15,7 +16,7 @@ mongoose.connect('mongodb://localhost:27017/http_app', {
 });
 
 app.use('/departments', department_controller);
-// app.get('/products', product_controller);
+app.get('/products', product_controller);
 
 app.use(function(req, res, next) {
   res.status(404).send('Route does not exist');
