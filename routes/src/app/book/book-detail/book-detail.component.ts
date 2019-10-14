@@ -12,7 +12,9 @@ import { switchMap, tap } from 'rxjs/operators';
 })
 export class BookDetailComponent implements OnInit {
 
+  // vai armazenar o book que será passado
   book$: Observable<Book> = null;
+  // armazena o index do libro
   index: number;
   authors: string[];
 
@@ -23,22 +25,28 @@ export class BookDetailComponent implements OnInit {
 
   ngOnInit() {
     console.log('Index: ', this.route.snapshot.paramMap.get('index'));
+    // forma correta se carregar um atributo passado por parametro e busca-lo em banco
     this.book$ = this.route.paramMap
-      .pipe( 
+      .pipe(
+        // preencho o index do libro que está sendo passado
         tap((params: ParamMap) => this.index = +params.get('index')),
+        // switchMap => conecta dois observables
         switchMap((params: ParamMap) => this.bookService.get( +params.get('index') )),
-        tap((b) => this.authors = (b) ? b.authors: [] ));
+        // b => book; Pegos os autores
+        tap((b) => this.authors = (b) ? b.authors : [] ));
 
-      //.subscribe((params: ParamMap) => console.log("Index: ", params.get('index')))
+      // nao preciso das subscribe pois a proria tela ja esta fazendo isso
+      // .subscribe((params: ParamMap) => console.log("Index: ", params.get('index')))
   }
 
   remove() {
     this.bookService.remove(this.index);
-    this.router.navigateByUrl("books");
+    this.router.navigateByUrl('books');
   }
 
   goAuthors() {
     let url = '/books/' + this.index + '/authors';
+    // navego para uma url passando os autores
     this.router.navigate([url, {authors: this.authors}])
   }
 

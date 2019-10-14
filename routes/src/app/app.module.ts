@@ -36,6 +36,7 @@ const appRoutes: Routes = [
     BookAuthorsComponent
   ],
   imports: [
+    // a ordem dos imports influencia nas rotas
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,

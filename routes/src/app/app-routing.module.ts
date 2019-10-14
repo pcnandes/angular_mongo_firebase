@@ -13,15 +13,21 @@ const appRoutes: Routes = [
   { path:'dvds', component: DvdComponent },
   { path:'books', 
     component: BookComponent,
+    // separa as subrotas do book
     children: [
       { path:':index', 
         component: BookDetailComponent,
+        // terceito nivel
         children: [
+          // authors -> vai ser um array de strings
           { path: 'authors', component: BookAuthorsComponent}
         ]
       },
     ]
   },
+  // loadChildren -> carrega o componente sob demanda
+  // para que funcione nao devo importar o EletronicsModule no meu app.module
+  // ./electronics/electronics.module#ElectronicsModule -> indico o module (<endereco>#Nome)
   { path: 'electronics', loadChildren: './electronics/electronics.module#ElectronicsModule'},
   { path:'dvds/new', component: DvdFormComponent },
   // passando parametro

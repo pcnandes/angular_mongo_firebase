@@ -24,6 +24,7 @@ export class ElectronicDetailComponent implements OnInit {
   }
 
   back() {
+    // {relativeTo: this.route} -> indica a rota de referencia
     this.router.navigate(['..'], {relativeTo: this.route})
   }
 

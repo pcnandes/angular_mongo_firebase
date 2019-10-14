@@ -924,9 +924,64 @@ constructor(
 goBack() {
 	// indica a rota
 	this.router.navigate(['/dvds']);
+	// outra forma de navegar
+	//this.router.navigateByUrl("books");
+	
+	// outra maneira de voltar um nivel
+	// {relativeTo: this.route} -> indica a rota de referencia
+    //this.router.navigate(['..'], {relativeTo: this.route})
 }
 
 // passando parametro adicionais na rota
 goDetails(i: number, dvd: Dvd) {
     this.router.navigate([`dvds/${i}`, {title: dvd.title}])
   }
+  
+  goAuthors() {
+    let url = '/books/' + this.index + '/authors';
+    // navego para uma url passando os autores
+    this.router.navigate([url, {authors: this.authors}])
+  }
+  
+--- rotas filhas
+const appRoutes: Routes = [
+  { path:'dvds', component: DvdComponent },
+  { path:'books', 
+    component: BookComponent,
+    // separa as subrotas do book
+    children: [
+      { path:':index', 
+        component: BookDetailComponent,
+        children: [
+          { path: 'authors', component: BookAuthorsComponent}
+        ]
+      },
+    ]
+  },
+  
+<!-- é preciso ter um route-outlet para exibir o component filho
+<router-outlet></router-outlet>
+
+
+#### Lazy modules. -> submodulos
+-- crio um módulo com roteamento proprio
+ng g m <NomeDoModule> -m app --routing
+
+
+ex. de rota filha
+const routes: Routes = [
+  {path: '', component: ElectronicListComponent},
+  {path: ':index', component: ElectronicDetailComponent},
+
+];
+
+@NgModule({
+  // forChild -> é usado para subrotas. forRoot deve ser usado apenas no arquvo de rotas principal
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+
+-- importando rota filha
+// loadChildren -> carrega o componente sob demanda
+  { path: 'electronics', loadChildren: './electronics/electronics.module#ElectronicsModule'},
+

@@ -11,6 +11,7 @@ import { MaterialModule } from '../material.module';
   imports: [
     CommonModule,
     ElectronicsRoutingModule,
+    // preciso importar o modulo do material, apesar de ter importado no module principal
     MaterialModule
   ]
 })

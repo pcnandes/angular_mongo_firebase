@@ -12,6 +12,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  // forChild -> é usado para subrotas. forRoot deve ser usado apenas no arquvo de rotas principal
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
