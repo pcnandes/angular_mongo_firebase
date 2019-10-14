@@ -1,0 +1,13 @@
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+  <span>My Store</span>
+  <span></span>
+  <div fxLayoutGap="20px">
+    <!-- routerLinkActive="mat-accent" permite uma classe para quando a rota estiver ativa -->
+    <a mat-raised-button routerLink="dvds"  routerLinkActive="mat-accent">DVDs</a>
+    <a mat-raised-button routerLink="books"  routerLinkActive="mat-accent">Books</a>
+    <a mat-raised-button routerLink="electronics"  routerLinkActive="mat-accent">Electronics</a>
+  </div>
+</mat-toolbar>
+
+<!-- indica onde as pagina do roteamento serão carregadas -->
+<router-outlet></router-outlet>

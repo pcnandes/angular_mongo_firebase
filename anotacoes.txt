@@ -30,6 +30,8 @@ let newProduct: Product = {...p}
 // dessa forma ele faz a copia e altera um dado
 let newProduct: Product = {...p, _id: 10}
 
+// converte string para inteiro (so passar o +)
+const i: number = +this.route.snapshot.paramMap.get('index')
 
 
 ### AngularCli
@@ -833,3 +835,98 @@ clientForm = this.fb.group({
 	{{clientForm.controls.firstName.errors | json}}-->
   </mat-error>
 </mat-form-field> 
+
+
+#### ROUTES
+-- cria um modulo de rotas
+ng g m AppRouting -m app --flat
+
+router -> usando quando se quer navegar
+route -> quando se quer capturar algum parametro
+
+-- exemplo de rotas	
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { DvdComponent } from './dvd/dvd.component';
+import { BookComponent } from './book/book.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { Routes, RouterModule } from '@angular/router';
+
+const appRoutes: Routes = [
+  { path: 'dvds', component: DvdComponent },
+  { path: 'books', component: BookComponent },
+  // passando parametro
+  { path: 'dvds/:index', component: DvdComponent },
+  // indica uma rota para o home. pathMatch -> indica que a rota tem q ser exatamente igual
+  { path: '', pathMatch: 'full', redirectTo: 'dvds' },
+  // '**' indica qualquer coisa, ou seja, nenhuma rota mapeada
+  { path: '**',  component: PageNotFoundComponent },
+]
+
+@NgModule({
+  declarations: [],
+  imports: [
+    CommonModule,
+    // para trabalhar com rotas é preciso usar o RouteModule
+    RouterModule.forRoot(appRoutes),
+  ],
+  exports: [
+    // preciso exportar minhas rotas para que sejam usadas em outros modulos
+    RouterModule
+  ]
+})
+export class AppRoutingModule { }
+
+
+
+-- permite aplicar uma classe quando a rota esta ativa
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+  <span>My Store</span>
+  <span></span>
+  <div fxLayoutGap="20px">
+    <!-- routerLinkActive="mat-accent" permite uma classe para quando a rota estiver ativa -->
+    <a mat-raised-button routerLink="dvds" routerLinkActive="mat-accent">DVDs</a>
+    <a mat-raised-button routerLink="books" routerLinkActive="mat-accent">Books</a>
+  </div>
+</mat-toolbar>
+
+<!-- indica onde as pagina do roteamento serão carregadas -->
+<router-outlet></router-outlet>
+
+
+<!-- criando uma subrota -->
+<button routerLink="/dvds/{{i}}">
+
+
+-- recuperando um parametro
+constructor(
+    // injetar AcrivatedRoute
+    private route: ActivatedRoute
+  ) { }
+
+  ngOnInit() {
+    // a grande diferença entre o snapshot e o paramMap é que no segundo mudanças na rota sao detectadas. Ou seja, capturo mudanças no index
+    // index -> é o mesmo nome dado na criacao da rota
+    console.log('Index: ' + this.route.snapshot.paramMap.get('index'));
+    // outra forma de pegar
+    this.route.paramMap
+      .subscribe((params: ParamMap) => console.log('Index' + params.get('index')));
+  }
+
+
+
+// navegando entre as rotas
+  constructor(
+    // permite navegar nas rotas
+    private router: Router) { }
+	
+	
+goBack() {
+	// indica a rota
+	this.router.navigate(['/dvds']);
+}
+
+// passando parametro adicionais na rota
+goDetails(i: number, dvd: Dvd) {
+    this.router.navigate([`dvds/${i}`, {title: dvd.title}])
+  }
